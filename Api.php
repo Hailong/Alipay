@@ -1,5 +1,5 @@
 <?php
-namespace Payum\Skeleton;
+namespace Payum\Alipay;
 
 use Http\Message\MessageFactory;
 use Payum\Core\Exception\Http\HttpException;

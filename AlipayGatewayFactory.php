@@ -1,17 +1,17 @@
 <?php
-namespace Payum\Skeleton;
+namespace Payum\Alipay;
 
-use Payum\Skeleton\Action\AuthorizeAction;
-use Payum\Skeleton\Action\CancelAction;
-use Payum\Skeleton\Action\ConvertPaymentAction;
-use Payum\Skeleton\Action\CaptureAction;
-use Payum\Skeleton\Action\NotifyAction;
-use Payum\Skeleton\Action\RefundAction;
-use Payum\Skeleton\Action\StatusAction;
+use Payum\Alipay\Action\AuthorizeAction;
+use Payum\Alipay\Action\CancelAction;
+use Payum\Alipay\Action\ConvertPaymentAction;
+use Payum\Alipay\Action\CaptureAction;
+use Payum\Alipay\Action\NotifyAction;
+use Payum\Alipay\Action\RefundAction;
+use Payum\Alipay\Action\StatusAction;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory;
 
-class SkeletonGatewayFactory extends GatewayFactory
+class AlipayGatewayFactory extends GatewayFactory
 {
     /**
      * {@inheritDoc}
@@ -19,8 +19,8 @@ class SkeletonGatewayFactory extends GatewayFactory
     protected function populateConfig(ArrayObject $config)
     {
         $config->defaults([
-            'payum.factory_name' => 'skeleton',
-            'payum.factory_title' => 'skeleton',
+            'payum.factory_name' => 'alipay',
+            'payum.factory_title' => 'alipay',
             'payum.action.capture' => new CaptureAction(),
             'payum.action.authorize' => new AuthorizeAction(),
             'payum.action.refund' => new RefundAction(),
