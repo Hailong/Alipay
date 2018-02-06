@@ -30,7 +30,12 @@
         "bin-dir": "bin"
     },
     "autoload": {
-        "psr-0": { "Payum\\Alipay": "" }
+        "psr-0": { "Payum\\Alipay\\Wap": "Wap" },
+        "classmap": [
+            "AlipaySDK/alipay-sdk-PHP-20180104135052/aop/",
+            "AlipaySDK/alipay.trade.page.pay-PHP-UTF-8/pagepay/buildermodel/",
+            "AlipaySDK/alipay.trade.wap.pay-PHP-UTF-8/wappay/buildermodel/"
+        ],
     },
     "target-dir": "Payum/Alipay",
     "extra": {
