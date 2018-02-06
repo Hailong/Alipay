@@ -1,18 +1,16 @@
 <?php
 namespace Payum\Alipay\Wap\Action\Api;
 
-use Payum\Alipay\Wap\Request\Api\RespondRequestForm;
+use Payum\Alipay\Wap\Request\Api\CheckSign;
 use Payum\Core\Bridge\Spl\ArrayObject;
-use Payum\Core\Exception\LogicException;
 use Payum\Core\Exception\RequestNotSupportedException;
-use Payum\Core\Reply\HttpResponse;
 
-class RespondRequestFormAction extends BaseApiAwareAction
+class CheckSignAction extends BaseApiAwareAction
 {
     /**
      * {@inheritdoc}
      *
-     * @param $request RespondRequestForm
+     * @param $request CheckSign
      */
     public function execute($request)
     {
@@ -20,9 +18,11 @@ class RespondRequestFormAction extends BaseApiAwareAction
 
         $details = ArrayObject::ensureArrayObject($request->getModel());
 
-        $form = $this->api->buildRequestForm((array) $details);
+        $result = $this->api->checkSign($_GET);
 
-        throw new HttpResponse($form);
+        $details->replace([
+            'VALID_SIGN' => $result,
+        ]);
     }
 
     /**
@@ -31,7 +31,7 @@ class RespondRequestFormAction extends BaseApiAwareAction
     public function supports($request)
     {
         return
-            $request instanceof RespondRequestForm &&
+            $request instanceof CheckSign &&
             $request->getModel() instanceof \ArrayAccess
         ;
     }

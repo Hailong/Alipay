@@ -6,9 +6,11 @@ use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\Capture;
+use Payum\Core\Request\GetHttpRequest;
 use Payum\Core\Exception\RequestNotSupportedException;
 use Payum\Core\Security\GenericTokenFactoryAwareInterface;
 use Payum\Core\Security\GenericTokenFactoryAwareTrait;
+use Payum\Alipay\Wap\Request\Api\CheckSign;
 use Payum\Alipay\Wap\Request\Api\RespondRequestForm;
 
 class CaptureAction implements ActionInterface, GatewayAwareInterface, GenericTokenFactoryAwareInterface
@@ -27,7 +29,16 @@ class CaptureAction implements ActionInterface, GatewayAwareInterface, GenericTo
 
         $details = ArrayObject::ensureArrayObject($request->getModel());
 
-        $details['return_url'] = $request->getToken()->getAfterUrl();
+        $this->gateway->execute($httpRequest = new GetHttpRequest());
+        if (isset($httpRequest->query['trade_no'])) {
+            $details->replace($httpRequest->query);
+
+            $this->gateway->execute(new CheckSign($details));
+
+            return;
+        }
+
+        $details['return_url'] = $request->getToken()->getTargetUrl();
 
         if (empty($details['notify_url']) && $request->getToken() && $this->tokenFactory) {
             $notifyToken = $this->tokenFactory->createNotifyToken(

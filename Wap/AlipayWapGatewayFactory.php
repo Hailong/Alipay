@@ -9,6 +9,7 @@ use Payum\Alipay\Wap\Action\NotifyAction;
 use Payum\Alipay\Wap\Action\RefundAction;
 use Payum\Alipay\Wap\Action\StatusAction;
 use Payum\Alipay\Wap\Action\Api\RespondRequestFormAction;
+use Payum\Alipay\Wap\Action\Api\CheckSignAction;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory;
 
@@ -31,6 +32,7 @@ class AlipayWapGatewayFactory extends GatewayFactory
             'payum.action.convert_payment' => new ConvertPaymentAction(),
 
             'payum.action.api.respond_request_form' => new RespondRequestFormAction(),
+            'payum.action.api.check_sign' => new CheckSignAction(),
         ]);
 
         if (false == $config['payum.api']) {

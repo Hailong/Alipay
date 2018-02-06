@@ -19,9 +19,19 @@ class StatusAction implements ActionInterface
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        $request->markNew();
+        if ($model['trade_no']) {
+            $request->markCaptured();
 
-        return;
+            return;
+        }
+
+        if ($model['out_trade_no']) {
+            $request->markPending();
+
+            return;
+        }
+
+        $request->markNew();
     }
 
     /**
